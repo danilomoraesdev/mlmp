@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core"
+import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core"
 
 // Exemplo de tabela - customize conforme necessário
 export const users = pgTable("users", {
