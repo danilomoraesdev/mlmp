@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 
-import { HomePage } from "./pages/HomePage"
+import { DashboardPage } from "./pages/Dashboard"
 
 import { Toaster } from "sonner"
 
@@ -10,7 +10,7 @@ export function App() {
     <BrowserRouter>
       <ThemeProvider>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<DashboardPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
