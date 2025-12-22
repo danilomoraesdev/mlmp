@@ -35,7 +35,6 @@ export function LoginForm({
 
     try {
       await login(email, password)
-      toast.success("Login realizado com sucesso!")
       navigate("/")
     } catch {
       toast.error("Erro ao fazer login. Tente novamente.")

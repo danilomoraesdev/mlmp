@@ -1,4 +1,5 @@
 import { DashboardPage } from "@/pages/Dashboard"
+import { ExamplePage } from "@/pages/Example"
 import type { ComponentType } from "react"
 
 export interface RouteConfig {
@@ -14,12 +15,31 @@ export const PRIVATE_ROUTES: RouteConfig[] = [
     title: "Dashboard",
     component: DashboardPage,
   },
-  // Add more private routes here:
-  // {
-  //   path: "/modulo/item-1",
-  //   title: "Item 1",
-  //   component: Item1Page,
-  // },
+  {
+    path: "/modulo/pagina-1",
+    title: "Página 1",
+    component: ExamplePage,
+  },
+  {
+    path: "/modulo/pagina-2",
+    title: "Página 2",
+    component: ExamplePage,
+  },
+  {
+    path: "/modulo/pagina-3",
+    title: "Página 3",
+    component: ExamplePage,
+  },
+  {
+    path: "/sistema/meu-perfil",
+    title: "Meu Perfil",
+    component: ExamplePage,
+  },
+  {
+    path: "/sistema/configuracoes",
+    title: "Configurações",
+    component: ExamplePage,
+  },
 ]
 
 // Helper to get title from path

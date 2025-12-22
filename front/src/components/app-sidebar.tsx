@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import {
   Sidebar,
   SidebarRail,
@@ -20,16 +20,16 @@ const data = {
       url: "/modulo",
       items: [
         {
-          title: "Item 1",
-          url: "/item-1",
+          title: "Página 1",
+          url: "/pagina-1",
         },
         {
-          title: "Item 2",
-          url: "/item-2",
+          title: "Página 2",
+          url: "/pagina-2",
         },
         {
-          title: "Item 3",
-          url: "/item-3",
+          title: "Página 3",
+          url: "/pagina-3",
         },
       ],
     },
@@ -59,7 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/">
+              <Link to="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Logo />
                 </div>
@@ -67,7 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="font-medium">MLMP</span>
                   <span className="">Painel do usuário</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -84,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild isActive={isActive}>
-                        <a href={fullPath}>{item.title}</a>
+                        <Link to={fullPath}>{item.title}</Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   )
