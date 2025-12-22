@@ -1,15 +1,19 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { LogOut, Moon, Sun } from "lucide-react"
 import { useTheme } from "@/contexts/ThemeContext"
 import { useAuth } from "@/contexts/AuthContext"
+import { getPageTitle } from "@/config/routes.config"
 
 export function SiteHeader() {
+  const location = useLocation()
   const { actualTheme, setTheme } = useTheme()
   const { logout } = useAuth()
   const navigate = useNavigate()
+
+  const pageTitle = getPageTitle(location.pathname)
 
   const toggleTheme = () => {
     setTheme(actualTheme === "dark" ? "light" : "dark")
@@ -28,7 +32,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">Dashboard</h1>
+        <h1 className="text-base font-medium">{pageTitle}</h1>
         <div className="ml-auto flex items-center gap-2">
           <Button
             variant="ghost"

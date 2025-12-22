@@ -3,10 +3,10 @@ import { ThemeProvider } from "@/contexts/ThemeContext"
 import { AuthProvider } from "@/contexts/AuthContext"
 import { ProtectedRoute } from "@/components/ProtectedRoute"
 import { PrivateLayout } from "@/layouts/PrivateLayout"
+import { PRIVATE_ROUTES } from "@/config/routes.config"
 
 import { Toaster } from "sonner"
 
-import { DashboardPage } from "./pages/Dashboard"
 import { LoginPage } from "./pages/Login"
 import SignupPage from "./pages/Signup"
 import OTPPage from "./pages/OTP"
@@ -22,7 +22,7 @@ export function App() {
             <Route path="/cadastro" element={<SignupPage />} />
             <Route path="/otp" element={<OTPPage />} />
 
-            {/* Private Routes */}
+            {/* Private Routes - generated from config */}
             <Route
               element={
                 <ProtectedRoute>
@@ -30,8 +30,13 @@ export function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path="/" element={<DashboardPage />} />
-              {/* Add more private routes here */}
+              {PRIVATE_ROUTES.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<route.component />}
+                />
+              ))}
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />
