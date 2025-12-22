@@ -1,3 +1,6 @@
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,16 +15,39 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
+  FieldError,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+
+const signupSchema = z
+  .object({
+    name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
+    email: z.string().email("E-mail inválido"),
+    password: z.string().min(8, "Senha deve ter pelo menos 8 caracteres"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+  })
+
+type SignupFormData = z.infer<typeof signupSchema>
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log("Form submitted")
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  })
+
+  const onSubmit = async (data: SignupFormData) => {
+    // TODO: Implement signup logic
+    console.log("Signup data:", data)
   }
 
   return (
@@ -34,7 +60,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="name">Nome completo</FieldLabel>
@@ -42,8 +68,9 @@ export function SignupForm({
                   id="name"
                   type="text"
                   placeholder="João da Silva"
-                  required
+                  {...register("name")}
                 />
+                {errors.name && <FieldError>{errors.name.message}</FieldError>}
               </Field>
               <Field>
                 <FieldLabel htmlFor="email">E-mail</FieldLabel>
@@ -51,8 +78,11 @@ export function SignupForm({
                   id="email"
                   type="email"
                   placeholder="joao@exemplo.com.br"
-                  required
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <FieldError>{errors.email.message}</FieldError>
+                )}
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
@@ -62,19 +92,25 @@ export function SignupForm({
                       id="password"
                       type="password"
                       placeholder="********"
-                      required
+                      {...register("password")}
                     />
+                    {errors.password && (
+                      <FieldError>{errors.password.message}</FieldError>
+                    )}
                   </Field>
                   <Field>
-                    <FieldLabel htmlFor="confirm-password">
+                    <FieldLabel htmlFor="confirmPassword">
                       Confirmar Senha
                     </FieldLabel>
                     <Input
-                      id="confirm-password"
+                      id="confirmPassword"
                       type="password"
                       placeholder="********"
-                      required
+                      {...register("confirmPassword")}
                     />
+                    {errors.confirmPassword && (
+                      <FieldError>{errors.confirmPassword.message}</FieldError>
+                    )}
                   </Field>
                 </Field>
                 <FieldDescription>
@@ -82,7 +118,9 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit">Cadastrar</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Cadastrando..." : "Cadastrar"}
+                </Button>
                 <FieldDescription className="text-center">
                   Já possui uma conta? <a href="/login">Entrar</a>
                 </FieldDescription>

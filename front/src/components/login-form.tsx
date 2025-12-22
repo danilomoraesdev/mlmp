@@ -1,5 +1,7 @@
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,32 +16,40 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
+  FieldError,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useAuth } from "@/contexts/AuthContext"
 import { toast } from "sonner"
 
+const loginSchema = z.object({
+  email: z.string().email("E-mail inválido"),
+  password: z.string().min(1, "Senha é obrigatória"),
+})
+
+type LoginFormData = z.infer<typeof loginSchema>
+
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  })
 
+  const onSubmit = async (data: LoginFormData) => {
     try {
-      await login(email, password)
+      await login(data.email, data.password)
       navigate("/")
     } catch {
       toast.error("Erro ao fazer login. Tente novamente.")
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -51,7 +61,7 @@ export function LoginForm({
           <CardDescription>Faça login com seu e-mail e senha</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">E-mail</FieldLabel>
@@ -59,10 +69,11 @@ export function LoginForm({
                   id="email"
                   type="email"
                   placeholder="m@example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <FieldError>{errors.email.message}</FieldError>
+                )}
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -77,14 +88,15 @@ export function LoginForm({
                 <Input
                   id="password"
                   type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <FieldError>{errors.password.message}</FieldError>
+                )}
               </Field>
               <Field>
-                <Button type="submit" disabled={isLoading}>
-                  {isLoading ? "Entrando..." : "Login"}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? "Entrando..." : "Login"}
                 </Button>
                 <FieldDescription className="text-center">
                   Não tem uma conta? <a href="/cadastro">Cadastre-se</a>
