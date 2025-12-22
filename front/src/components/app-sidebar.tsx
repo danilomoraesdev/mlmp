@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom"
 import {
   Sidebar,
   SidebarRail,
@@ -21,7 +22,6 @@ const data = {
         {
           title: "Item 1",
           url: "/item-1",
-          isActive: true,
         },
         {
           title: "Item 2",
@@ -51,6 +51,8 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const location = useLocation()
+
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -76,13 +78,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {group.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={`${group.url}${item.url}`}>{item.title}</a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {group.items.map((item) => {
+                  const fullPath = `${group.url}${item.url}`
+                  const isActive = location.pathname === fullPath
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild isActive={isActive}>
+                        <a href={fullPath}>{item.title}</a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
