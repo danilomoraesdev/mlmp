@@ -15,21 +15,21 @@ import { Logo } from "@/components/logo"
 const data = {
   userNav: [
     {
-      title: "Rede",
-      url: "/rede",
+      title: "Módulo",
+      url: "/modulo",
       items: [
         {
-          title: "Resumo",
-          url: "/resumo",
-        },
-        {
-          title: "Matriz",
-          url: "/matriz",
+          title: "Item 1",
+          url: "/item-1",
           isActive: true,
         },
         {
-          title: "Downline",
-          url: "/downline",
+          title: "Item 2",
+          url: "/item-2",
+        },
+        {
+          title: "Item 3",
+          url: "/item-3",
         },
       ],
     },
@@ -38,12 +38,8 @@ const data = {
       url: "/sistema",
       items: [
         {
-          title: "Minha Conta",
-          url: "/minha-conta",
-        },
-        {
-          title: "Financeiro",
-          url: "/financeiro",
+          title: "Meu Perfil",
+          url: "/meu-perfil",
         },
         {
           title: "Configurações",
