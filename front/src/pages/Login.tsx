@@ -1,6 +1,5 @@
-import { Network } from "lucide-react"
-
 import { LoginForm } from "@/components/login-form"
+import { Logo } from "@/components/logo"
 
 export function LoginPage() {
   return (
@@ -8,7 +7,7 @@ export function LoginPage() {
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <Network className="size-4" />
+            <Logo />
           </div>
           MLMP
         </a>

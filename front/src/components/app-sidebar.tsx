@@ -10,7 +10,7 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar"
-import { Network } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 const data = {
   userNav: [
@@ -67,7 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Network className="size-4" />
+                  <Logo />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-medium">MLMP</span>
