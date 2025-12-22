@@ -49,10 +49,6 @@ const data = {
           title: "Configurações",
           url: "/configuracoes",
         },
-        {
-          title: "Sair",
-          url: "/logout",
-        },
       ],
     },
   ],
