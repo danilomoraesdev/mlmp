@@ -1,5 +1,27 @@
 {
+  "name": "mlmp",
+  "version": "1.0.0",
+  "description": "Modern Fullstack Boilerplate - Fastify + React + PostgreSQL",
+  "private": true,
   "scripts": {
-    "dev": "cd back && npm run dev & cd front && npm run dev"
+    "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
+    "dev:back": "cd back && npm run dev",
+    "dev:front": "cd front && npm run dev",
+    "build": "npm run build:back && npm run build:front",
+    "build:back": "cd back && npm run build",
+    "build:front": "cd front && npm run build",
+    "lint": "cd front && npm run lint",
+    "db:push": "cd back && npm run db:push",
+    "db:migrate": "cd back && npm run db:migrate",
+    "db:generate": "cd back && npm run db:generate",
+    "db:studio": "cd back && npm run db:studio",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up -d",
+    "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "docker:prod": "docker compose up -d --build",
+    "docker:prod:down": "docker compose down",
+    "install:all": "cd back && npm install && cd ../front && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
