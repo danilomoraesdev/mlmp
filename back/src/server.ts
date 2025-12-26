@@ -2,7 +2,7 @@ import "dotenv/config";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
+import scalarFastifyApiReference from "@scalar/fastify-api-reference";
 import {
   serializerCompiler,
   validatorCompiler,
@@ -56,13 +56,8 @@ fastify.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
-fastify.register(fastifySwaggerUi, {
+fastify.register(scalarFastifyApiReference, {
   routePrefix: "/docs",
-  uiConfig: {
-    docExpansion: "list",
-    deepLinking: true,
-  },
-  staticCSP: true,
 });
 
 // Registrar CORS
