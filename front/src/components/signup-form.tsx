@@ -118,8 +118,8 @@ export function SignupForm({
                 </FieldDescription>
               </Field>
               <Field>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Cadastrando..." : "Cadastrar"}
+                <Button type="submit" isLoading={isSubmitting}>
+                  Cadastrar
                 </Button>
                 <FieldDescription className="text-center">
                   Já possui uma conta? <a href="/login">Entrar</a>

@@ -95,8 +95,8 @@ export function LoginForm({
                 )}
               </Field>
               <Field>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "Entrando..." : "Login"}
+                <Button type="submit" isLoading={isSubmitting}>
+                  Login
                 </Button>
                 <FieldDescription className="text-center">
                   Não tem uma conta? <a href="/cadastro">Cadastre-se</a>

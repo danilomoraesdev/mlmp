@@ -84,8 +84,8 @@ export function OTPForm({ ...props }: React.ComponentProps<typeof Card>) {
                 Insira o código de verificação enviado para o seu e-mail.
               </FieldDescription>
             </Field>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Verificando..." : "Verificar"}
+            <Button type="submit" isLoading={isSubmitting}>
+              Verificar
             </Button>
             <FieldDescription className="text-center">
               Não recebeu o código? <a href="#">Reenviar</a>
