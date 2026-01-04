@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ThemeProvider } from "@/contexts/ThemeContext"
-import { AuthProvider } from "@/contexts/AuthContext"
-import { ProtectedRoute } from "@/components/ProtectedRoute"
-import { PrivateLayout } from "@/layouts/PrivateLayout"
-import { PRIVATE_ROUTES } from "@/config/routes.config"
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { PrivateLayout } from '@/layouts/PrivateLayout'
+import { AuthLayout } from '@/layouts/AuthLayout'
+import { PRIVATE_ROUTES } from '@/config/routes.config'
 
-import { Toaster } from "sonner"
+import { Toaster } from 'sonner'
 
-import { LoginPage } from "./pages/Login"
-import SignupPage from "./pages/Signup"
-import OTPPage from "./pages/OTP"
+import { LoginForm } from './components/auth/login-form'
+import { SignupForm } from './components/auth/signup-form'
+import { OTPForm } from './components/auth/otp-form'
 
 // Configuração do React Query
 const queryClient = new QueryClient({
@@ -31,9 +32,11 @@ export function App() {
           <ThemeProvider>
             <Routes>
               {/* Public Routes */}
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/cadastro" element={<SignupPage />} />
-              <Route path="/otp" element={<OTPPage />} />
+              <Route element={<AuthLayout />}>
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/cadastro" element={<SignupForm />} />
+                <Route path="/otp" element={<OTPForm />} />
+              </Route>
 
               {/* Private Routes - generated from config */}
               <Route

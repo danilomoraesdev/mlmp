@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -23,10 +22,7 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+export function LoginForm() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
@@ -48,7 +44,7 @@ export function LoginForm({
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Bem-vindo!</CardTitle>
@@ -100,6 +96,6 @@ export function LoginForm({
         <Link to="/termos">Termos de Serviço</Link> e{' '}
         <Link to="/privacidade">Política de Privacidade</Link>.
       </p>
-    </div>
+    </>
   )
 }

@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -30,10 +29,7 @@ const signupSchema = z
 
 type SignupFormData = z.infer<typeof signupSchema>
 
-export function SignupForm({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+export function SignupForm() {
   const { register: registerUser } = useAuth()
   const navigate = useNavigate()
 
@@ -58,7 +54,7 @@ export function SignupForm({
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Crie sua conta</CardTitle>
@@ -119,6 +115,6 @@ export function SignupForm({
         <Link to="/termos">Termos de Serviço</Link> e{' '}
         <Link to="/privacidade">Política de Privacidade</Link>.
       </p>
-    </div>
+    </>
   )
 }

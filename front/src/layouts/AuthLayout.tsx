@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom'
 import { Logo } from '@/components/logo'
 
 export function AuthLayout() {
@@ -8,7 +9,9 @@ export function AuthLayout() {
           <Logo />
           MLMP
         </div>
-        {/* Form */}
+        <div className="flex flex-col gap-6 w-full max-w-sm mx-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   )
