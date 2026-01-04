@@ -1,7 +1,6 @@
 import { Logo } from '@/components/logo'
-import { LoginForm } from '@/components/auth/login-form'
 
-export function LoginPage() {
+export function AuthLayout() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full flex-col gap-6">
@@ -9,7 +8,7 @@ export function LoginPage() {
           <Logo />
           MLMP
         </div>
-        <LoginForm className="w-full max-w-sm mx-auto" />
+        {/* Form */}
       </div>
     </div>
   )
