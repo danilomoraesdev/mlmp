@@ -13,7 +13,6 @@ import {
 import { Form } from '@/components/ui/form'
 import { FormInput } from '@/components/ui/form-input'
 import { useAuth } from '@/contexts/AuthContext'
-import { toast } from 'sonner'
 
 const loginSchema = z.object({
   email: z.string().email('E-mail inválido'),
@@ -39,7 +38,7 @@ export function LoginForm() {
       await login(data.email, data.password)
       navigate('/')
     } catch {
-      toast.error('Erro ao fazer login. Tente novamente.')
+      form.setError('password', { message: 'Dados de acesso inválidos' })
     }
   }
 

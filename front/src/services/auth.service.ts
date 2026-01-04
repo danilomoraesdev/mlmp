@@ -1,40 +1,44 @@
-import api, { setStoredTokens, clearStoredTokens } from "./api"
+import api, { setStoredTokens, clearStoredTokens } from './api'
 import type {
   AuthResponse,
   LoginInput,
   RegisterInput,
   ChangePasswordInput,
   User,
-} from "@/types"
+} from '@/types'
 
 export const authService = {
   async login(data: LoginInput): Promise<AuthResponse> {
-    const response = await api.post<AuthResponse>("/auth/login", data)
+    const response = await api.post<AuthResponse>('/auth/login', data, {
+      _skipAuthRefresh: true,
+    } as object)
     setStoredTokens(response.data.tokens)
     return response.data
   },
 
   async register(data: RegisterInput): Promise<AuthResponse> {
-    const response = await api.post<AuthResponse>("/auth/register", data)
+    const response = await api.post<AuthResponse>('/auth/register', data, {
+      _skipAuthRefresh: true,
+    } as object)
     setStoredTokens(response.data.tokens)
     return response.data
   },
 
   async logout(): Promise<void> {
     try {
-      await api.post("/auth/logout")
+      await api.post('/auth/logout')
     } finally {
       clearStoredTokens()
     }
   },
 
   async getProfile(): Promise<User> {
-    const response = await api.get<User>("/auth/me")
+    const response = await api.get<User>('/auth/me')
     return response.data
   },
 
   async changePassword(data: ChangePasswordInput): Promise<void> {
-    await api.put("/auth/change-password", data)
+    await api.put('/auth/change-password', data)
   },
 }
 
