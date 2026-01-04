@@ -7,7 +7,7 @@ import { LogOut, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useAuth } from '@/contexts/AuthContext'
 import { getPageTitle } from '@/config/routes.config'
-import { getInitials } from '@/lib/utils'
+import { getInitials, getShortName } from '@/lib/utils'
 
 export function SiteHeader() {
   const location = useLocation()
@@ -43,7 +43,9 @@ export function SiteHeader() {
                   {getInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-sm text-muted-foreground">{user.name}</span>
+              <span className="text-sm text-muted-foreground">
+                {getShortName(user.name)}
+              </span>
             </div>
           )}
           <Button
