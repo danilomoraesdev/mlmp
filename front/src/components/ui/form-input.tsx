@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { type Control, type FieldPath, type FieldValues } from 'react-hook-form'
+import { Eye, EyeOff } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import {
   FormControl,
   FormDescription,
@@ -50,6 +52,9 @@ export function FormInput<
   classNames,
   labelExtra,
 }: FormInputProps<TFieldValues, TName>) {
+  const [showPassword, setShowPassword] = React.useState(false)
+  const isPasswordType = type === 'password'
+
   return (
     <FormField
       control={control}
@@ -70,14 +75,35 @@ export function FormInput<
             </div>
           )}
           <FormControl>
-            <Input
-              type={type}
-              placeholder={placeholder}
-              disabled={disabled}
-              className={classNames?.input}
-              {...field}
-              value={field.value ?? ''}
-            />
+            <div className="relative">
+              <Input
+                type={isPasswordType && showPassword ? 'text' : type}
+                placeholder={placeholder}
+                disabled={disabled}
+                className={cn(isPasswordType && 'pr-10', classNames?.input)}
+                {...field}
+                value={field.value ?? ''}
+              />
+              {isPasswordType && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-0 top-0 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-muted-foreground" />
+                  )}
+                  <span className="sr-only">
+                    {showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  </span>
+                </Button>
+              )}
+            </div>
           </FormControl>
           {description && (
             <FormDescription className={classNames?.description}>
