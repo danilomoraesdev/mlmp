@@ -59,6 +59,8 @@ export const users = pgTable("users", {
   isActive: boolean("is_active").default(true).notNull(),
   emailVerifiedAt: timestamp("email_verified_at"),
   refreshToken: text("refresh_token"),
+  passwordResetToken: text("password_reset_token"),
+  passwordResetExpires: timestamp("password_reset_expires"),
   // Avatar
   avatarUrl: varchar("avatar_url", { length: 500 }),
   // Auditoria

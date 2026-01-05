@@ -4,7 +4,7 @@ export interface User {
   id: number
   name: string
   email: string
-  role: "admin" | "user" | "guest"
+  role: 'admin' | 'user' | 'guest'
   isActive: boolean
   emailVerifiedAt: string | null
   createdAt: string
@@ -44,6 +44,15 @@ export interface ChangePasswordInput {
 export interface ApiError {
   error: string
   message: string
+}
+
+export interface ForgotPasswordInput {
+  email: string
+}
+
+export interface ResetPasswordInput {
+  token: string
+  password: string
 }
 
 export interface PaginatedResponse<T> {

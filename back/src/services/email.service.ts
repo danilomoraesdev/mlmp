@@ -1,28 +1,34 @@
 import nodemailer from "nodemailer";
 import type { SendMailOptions, Transporter } from "nodemailer";
 
-// Configuração do transporter
-const createTransporter = (): Transporter => {
+// Configuração lazy do transporter (garante que as variáveis de ambiente estejam carregadas)
+let transporter: Transporter | null = null;
+
+const getTransporter = (): Transporter => {
+  if (transporter) {
+    return transporter;
+  }
+
   // Em desenvolvimento, use Ethereal (fake SMTP) ou configure SMTP real
   if (process.env.NODE_ENV === "development" && !process.env.SMTP_HOST) {
     // Retorna um transporter que loga no console em dev
-    return nodemailer.createTransport({
+    transporter = nodemailer.createTransport({
       jsonTransport: true, // Retorna o e-mail como JSON ao invés de enviar
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: process.env.SMTP_SECURE === "true",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
     });
   }
 
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT) || 587,
-    secure: process.env.SMTP_SECURE === "true",
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
+  return transporter;
 };
-
-const transporter = createTransporter();
 
 // Configurações padrão
 const defaultFromEmail = process.env.MAIL_FROM || "noreply@example.com";
@@ -63,7 +69,7 @@ export const emailService = {
         attachments: options.attachments,
       };
 
-      const info = await transporter.sendMail(mailOptions);
+      const info = await getTransporter().sendMail(mailOptions);
 
       // Em desenvolvimento com jsonTransport, loga o e-mail
       if (process.env.NODE_ENV === "development" && !process.env.SMTP_HOST) {

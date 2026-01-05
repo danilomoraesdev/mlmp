@@ -4,6 +4,8 @@ import type {
   LoginInput,
   RegisterInput,
   ChangePasswordInput,
+  ForgotPasswordInput,
+  ResetPasswordInput,
   User,
 } from '@/types'
 
@@ -39,6 +41,18 @@ export const authService = {
 
   async changePassword(data: ChangePasswordInput): Promise<void> {
     await api.put('/auth/change-password', data)
+  },
+
+  async forgotPassword(data: ForgotPasswordInput): Promise<void> {
+    await api.post('/auth/forgot-password', data, {
+      _skipAuthRefresh: true,
+    } as object)
+  },
+
+  async resetPassword(data: ResetPasswordInput): Promise<void> {
+    await api.post('/auth/reset-password', data, {
+      _skipAuthRefresh: true,
+    } as object)
   },
 }
 

@@ -12,6 +12,8 @@ import { Toaster } from 'sonner'
 import { LoginForm } from './components/auth/login-form'
 import { SignupForm } from './components/auth/signup-form'
 import { OTPForm } from './components/auth/otp-form'
+import { ForgotPasswordForm } from './components/auth/forgot-password-form'
+import { ResetPasswordForm } from './components/auth/reset-password-form'
 
 // Configuração do React Query
 const queryClient = new QueryClient({
@@ -36,6 +38,14 @@ export function App() {
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/cadastro" element={<SignupForm />} />
                 <Route path="/otp" element={<OTPForm />} />
+                <Route
+                  path="/esqueci-minha-senha"
+                  element={<ForgotPasswordForm />}
+                />
+                <Route
+                  path="/redefinir-senha"
+                  element={<ResetPasswordForm />}
+                />
               </Route>
 
               {/* Private Routes - generated from config */}
